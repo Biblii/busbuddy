@@ -1,20 +1,23 @@
- // JavaScript to handle popup functionality
-const popup = document.getElementById('popup');
-const closeBtn = document.querySelector('.close');
-const goBackBtn = document.querySelector('.go-back');  // Get the 'Go Back' button
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to get query parameters from the URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
-// Show popup when the Submit button is clicked
-document.querySelector('.btn').addEventListener('click', function (e) {
-    e.preventDefault();  // Prevent form submission
-    popup.style.display = 'block';  // Show the popup
-});
+    // Check if the form submission was successful
+    const status = getQueryParam('status');
+    
+    if (status === 'success') {
+        // Show the popup
+        const popup = document.getElementById('popup');
+        popup.style.display = 'block';
 
-// Close popup when the Close button is clicked
-closeBtn.addEventListener('click', function () {
-    popup.style.display = 'none';  // Hide the popup
-});
-
-// Redirect to home page or a specific link when 'Go Back' button is clicked
-goBackBtn.addEventListener('click', function () {
-    window.location.href = 'index.html';  // Redirect to home page (or any other link)
+        // Close button event
+        document.querySelector('.close').addEventListener('click', function() {
+            popup.style.display = 'none';
+            // Optionally, clear the URL parameter
+            window.history.replaceState({}, document.title, window.location.pathname);
+        });
+    }
 });
